@@ -6,6 +6,10 @@ if [ "0" != "`id -u`" ]; then
 fi
 
 HARDWARE_REV=`cat /proc/cpuinfo | grep "Hardware" | awk -F: '{print $NF}'`
+if [ "$HARDWARE_REV" != " BCM2709" ] && [ "$HARDWARE_REV" != " BCM2708" ]; then
+ echo "This tool is available only for Raspberry PI, exiting"
+ exit 0
+fi
 
 function getsources {
 
@@ -72,10 +76,5 @@ echo " "
 echo "Done, you can now build and install out of kernel modules"
 }
 
-
-if [ "$HARDWARE_REV" = " BCM2709" ] || [ "$HARDWARE_REV" = " BCM2708" ]; then
- kernelinstall
-else
- echo "This tool is available only for Raspberry PI, exiting"
-fi
+kernelinstall
 
