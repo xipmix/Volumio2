@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ "0" != "`id -u`" ]; then
+ echo "You must be root to run $0" 1>&2
+ exit 1
+fi
 
 HARDWARE_REV=`cat /proc/cpuinfo | grep "Hardware" | awk -F: '{print $NF}'`
 
