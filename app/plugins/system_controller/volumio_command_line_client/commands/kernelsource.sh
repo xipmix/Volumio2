@@ -28,7 +28,7 @@ FIRMWARE_REV=`cat /boot/.firmware_revision`
 echo "Firmware revision is"  $FIRMWARE_REV 
 
 KERNEL_REV=`curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/git_hash`
-echo "Kernel revision is "$FIRMWARE_REV
+echo "Kernel revision is "$KERNEL_REV
 
 if [ "$ARCH" = armv7l ]; then
  echo "Getting modules symvers for V7 kernel"
