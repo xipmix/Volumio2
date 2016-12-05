@@ -7,6 +7,28 @@ fi
 
 HARDWARE_REV=`cat /proc/cpuinfo | grep "Hardware" | awk -F: '{print $NF}'`
 
+function getsources {
+
+FIRMWARE_REV=`cat /boot/.firmware_revision`
+echo "Firmware revision is"  $FIRMWARE_REV 
+
+KERNEL_REV=`curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/git_hash`
+echo "Kernel revision is "$KERNEL_REV
+
+if [ "$ARCH" = armv7l ]; then
+ echo "Getting modules symvers for V7 kernel"
+ curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/Module7.symvers >Module7.symvers
+ else
+ echo "Getting modules symvers for V6 kernel"
+ curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/Module.symvers >Module.symvers
+fi
+
+echo "Donwloading Kernel source tarball from " https://github.com/raspberrypi/linux/archive/${KERNEL_REV}.tar.gz
+curl -L https://github.com/raspberrypi/linux/archive/${KERNEL_REV}.tar.gz >rpi-linux.tar.gz
+
+}
+export -f getsources
+
 function kernelinstall {
 
 echo " ---- VOLUMIO RASPBERRY PI KERNEL SOURCE DOWNLOADER ----"
@@ -24,22 +46,7 @@ then
 fi
 
 cd /home/volumio
-FIRMWARE_REV=`cat /boot/.firmware_revision`
-echo "Firmware revision is"  $FIRMWARE_REV 
-
-KERNEL_REV=`curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/git_hash`
-echo "Kernel revision is "$KERNEL_REV
-
-if [ "$ARCH" = armv7l ]; then
- echo "Getting modules symvers for V7 kernel"
- curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/Module7.symvers >Module7.symvers
- else
- echo "Getting modules symvers for V6 kernel"
- curl -L https://github.com/Hexxeh/rpi-firmware/raw/${FIRMWARE_REV}/Module.symvers >Module.symvers
-fi
-
-echo "Donwloading Kernel source tarball from " https://github.com/raspberrypi/linux/archive/${KERNEL_REV}.tar.gz
-curl -L https://github.com/raspberrypi/linux/archive/${KERNEL_REV}.tar.gz >rpi-linux.tar.gz
+su volumio -c "bash -c getsources"
 
 echo "creating /usr/src/rpi-linux folder"
 mkdir /usr/src/rpi-linux
