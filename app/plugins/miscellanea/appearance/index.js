@@ -244,7 +244,7 @@ volumioAppearance.prototype.generateThumbnails = function(){
             if (numberfile===files.length){
 				var background = config.get('background_title')
 				if (background === 'Initial') {
-						self.selectRandomBacground();
+						self.selectRandomBackground();
 				}
                 defer.resolve('Ok');
             }
@@ -368,7 +368,7 @@ volumioAppearance.prototype.deleteFile = function(filepath){
     return defer.promise;
 }
 
-volumioAppearance.prototype.selectRandomBacground = function(){
+volumioAppearance.prototype.selectRandomBackground = function(){
     var self = this;
 
     var backgrounds = self.getBackgrounds();
