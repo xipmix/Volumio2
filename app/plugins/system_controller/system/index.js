@@ -487,7 +487,7 @@ ControllerSystem.prototype.deleteUserData = function () {
 
     fs.writeFile('/boot/user_data', ' ', function (err) {
         if (err) {
-            self.logger.info('Cannot User Data delete file');
+            self.logger.info('Cannot create User Data delete file');
         } else {
             self.logger.info('Created User Data delete file, rebooting');
             self.commandRouter.reboot();
