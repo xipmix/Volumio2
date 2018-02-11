@@ -74,11 +74,14 @@ AlarmClock.prototype.getUIConfig = function()
 	//enable
 	uiconf.sections[0].content[0].value=config.get('enabled');
 
+	//timeType ('offset' or 'absolute')
+	uiconf.sections[0].content[1].value=config.get('timeType');
+
 	//hour
-	uiconf.sections[0].content[1].value.value=config.get('hour');
+	uiconf.sections[0].content[2].value.value=config.get('hour');
 
 	//minute
-	uiconf.sections[0].content[2].value.value=config.get('minute');
+	uiconf.sections[0].content[3].value.value=config.get('minute');
 
 	return uiconf;
 };
