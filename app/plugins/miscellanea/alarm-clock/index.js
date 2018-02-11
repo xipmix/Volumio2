@@ -288,14 +288,13 @@ AlarmClock.prototype.setSleep = function(data)
 	var defer = libQ.defer();
 
 	var splitted = data.time.split(':');
-
-	var thisMoment = moment();
-
 	var addedHours = parseFloat(splitted[0]);
 	var addedMinutes = parseFloat(splitted[1]);
 
-	thisMoment.add(parseFloat(splitted[0]),"h");
-	thisMoment.add(parseFloat(splitted[1]),"m");
+	var thisMoment = moment();
+
+	thisMoment.add(addedHours,"h");
+	thisMoment.add(addedMinutes,"m");
 
   	var sleephour = thisMoment.hour()
 	var sleepminute = thisMoment.minute()
