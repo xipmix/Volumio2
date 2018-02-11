@@ -292,7 +292,7 @@ AlarmClock.prototype.setSleep = function(data)
 	var addedMinutes = parseFloat(splitted[1]);
 
 	var timeType = 'offset';
-	if (data.timetype != undefined) timetype = data.timetype;
+	if (data.timeType != undefined) timeType = data.timeType;
 
 	// select the reference time (default to 'now')
 	var thisMoment = moment();
