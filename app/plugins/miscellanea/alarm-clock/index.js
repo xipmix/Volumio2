@@ -294,8 +294,13 @@ AlarmClock.prototype.setSleep = function(data)
 	var timeType = 'offset';
 	if (data.timetype != undefined) timetype = data.timetype;
 
+	// select the reference time (default to 'now')
 	var thisMoment = moment();
-
+	// absolute hh:mm can be treated as an offset from midnight
+	if ( timeType == 'absolute' ) {
+		var midnight = new Date().setHours(0,0,0,0);
+		thisMoment = moment(midnight);
+	};
 	thisMoment.add(addedHours,"h");
 	thisMoment.add(addedMinutes,"m");
 
@@ -305,7 +310,7 @@ AlarmClock.prototype.setSleep = function(data)
 		sleep_enabled: data.enabled,
 		sleep_hour: splitted[0],
 		sleep_minute: splitted[1],
-		sleep_requestedat: new Date().toISOString(),
+		sleep_requestedat: thisMoment.toISOString(),
 		sleep_action: data.action
 	};
 	self.setSleepConf(sleepTask);
