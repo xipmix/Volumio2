@@ -287,7 +287,7 @@ AlarmClock.prototype.setSleep = function(data)
 	var self = this;
 	var defer = libQ.defer();
 
-	var splitted=data.time.split(':');
+	var splitted = data.time.split(':');
 
 	var thisMoment = moment();
 
@@ -311,13 +311,13 @@ AlarmClock.prototype.setSleep = function(data)
 	self.commandRouter.pushConsoleMessage('[' + Date.now() + '] ' + 'SetSleep: ' + splitted[0] + ' hours ' + splitted[1] + ' minutes ' + ', enabled: ' + data.enabled);
 
 
-	if(self.haltSchedule!=undefined)
+	if (self.haltSchedule != undefined)
 	{
 		self.haltSchedule.cancel();
 		delete self.haltSchedule;
 	}
 
-	if(data.enabled)
+	if (data.enabled)
 	{
 		var actionText
 		var date = new Date(thisMoment.year(), thisMoment.month(), thisMoment.date(), sleephour, sleepminute, 0);
@@ -330,7 +330,7 @@ AlarmClock.prototype.setSleep = function(data)
 
 			setTimeout(function()
 			{
-				if (data.action == 'stop'){
+				if (data.action == 'stop') {
           self.commandRouter.pushConsoleMessage("Sleep timer expired.");
 					self.commandRouter.volumioStop();
           self.getSleepConf().sleep_enabled = false;
@@ -353,7 +353,7 @@ AlarmClock.prototype.setSleep = function(data)
 		if (sleepminute < 10) {
 			sleepminute = "0" + sleepminute;
 		}
-		if (data.action == 'stop'){
+		if (data.action == 'stop') {
 			actionText = self.commandRouter.getI18nString('ALARM.STOP_MUSIC');
 		} else {
 			actionText = self.commandRouter.getI18nString('ALARM.TURN_OFF');
