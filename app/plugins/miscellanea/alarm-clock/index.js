@@ -291,6 +291,9 @@ AlarmClock.prototype.setSleep = function(data)
 	var addedHours = parseFloat(splitted[0]);
 	var addedMinutes = parseFloat(splitted[1]);
 
+	var timeType = 'offset';
+	if (data.timetype != undefined) timetype = data.timetype;
+
 	var thisMoment = moment();
 
 	thisMoment.add(addedHours,"h");
